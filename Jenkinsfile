@@ -45,6 +45,17 @@ pipeline {
                 }
             }
         }
+        stage('Build kogito-cloud-s2i') {
+            agent { label 'osbs-builder' }
+            steps {
+                dir("kogito-cloud/s2i") {
+                    script {
+                        sh 'make build'
+                        sh 'make test'
+                    }
+                }
+            }
+        }
     }
     post {
         unstable {
